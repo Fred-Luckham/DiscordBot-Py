@@ -15,18 +15,22 @@ class Config:
             # Note: Default paths are given relative to the bot's root path
             # Feel free to specify absolute paths in your bot.ini to be clear
             self.token = self.config.get('Private', 'token', fallback='') # DO NOT set token here directly
-            self.cogs_path = self.config.get('Private', 'cogs_path', fallback='cogs')
+            self.cogs_path = self.config.get('Private', 'cogs_path', fallback='Cogs')
             self.bot_channel_id = int(self.config.get('Private', 'bot_channel_id', fallback=''))
             self.admins = self.config.get('Private', 'admins', fallback= '')
-            self.database = self.config.get('Private', 'database', fallback='labels.json')
-            self.main_server = int(self.config.get('Private', 'main_server', fallback=''))
+            self.database_labels = self.config.get('Private', 'database_labels', fallback='labels.json')
+            self.database_claims = self.config.get('Private', 'database_claims', fallback='claims.json')
+            self.main_server_id = int(self.config.get('Private', 'main_server_id', fallback=''))
+            self.servers = self.config.get('Private', 'servers', fallback='')
             self.additional_info_text = self.config.get('Private', 'additional_info_text', fallback='')
+            self.logfile = self.config.get('Private', 'logfile', fallback='discord.log')
             
             self.timezone = self.config.get('General', 'timezone', fallback='GMT') # Note: this is just a string to be printed. Does not affect actually affect displayed time.
             self.description = self.config.get('General', 'description', fallback='''A simple database bot''')
-            self.name = self.config.get('General', 'name', fallback='DB BOT')
+            self.name = self.config.get('General', 'name', fallback='Database Bot')
             self.prefix = self.config.get('General', 'prefix', fallback='!')
-            self.cogs = self.config.get('General', 'cogs', fallback='Commands').split(',')
+            self.cogs = self.config.get('General', 'Cogs', fallback='Claims, Labels, Misc').split(',')
+            self.forbidden_characters = self.config.get('General', 'forbidden_characters', fallback='')
 
         except Exception as e:
             print('Error reading config file' + str(e))
