@@ -1,6 +1,7 @@
 import discord
 import os
 import logging
+import wikipedia
 from conf import config
 from discord.ext import commands
 
@@ -33,6 +34,16 @@ class Misc(commands.Cog):
     async def quarantine(self, ctx, message):
         channel = self.bot.get_channel(740991480574902405)
         await channel.send(message)
+        return
+    
+    @commands.command(
+        name='trivia',
+        description='Grabs whatever it finds from Wikipedia'
+    )
+    async def trivia(self, ctx, message):
+        searchterm = ctx.message.content
+        response = wikipedia.summary(searchterm, sentences=1)
+        await ctx.send('```{0}```'.format(response))
         return
 
 
