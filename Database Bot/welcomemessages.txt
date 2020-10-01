@@ -1,11 +1,5 @@
-We welcome you freely outlander.
-Well, here's a fine one! Speak freely.
-I like what I see.
-Welcome, friend! Hail!
-Seen any elves? HAHAHA!
-Under sun and sky outlander, we greet you warmly.
-Wealth beyond measure, outlander.
-Ah, yes! We've been expecting you.
-Our sugar is yours, friend.
-Muth Sera.
-Walk with virtue outlander.
+Example message 1
+Example message 2
+Example message 3
+Example message 4
+Example message 5
