@@ -8,9 +8,16 @@ Database Commands:
 - !set    (sets a label with a value, ie. !set test "this is a test label")
 - !get    (gets the stated label, ie. !get test would return "this is a test label")
 - !update (updates the stated label with a new value.
+- !remove (removes the stated label)
+
 Misc Commands:
 - !rules  (Displays server rules)
-- !trivia (takes message content and sends it as a query in a wikipedia.summary search
+- !welcome (Displays a welcome message)
+- !wiki (takes message content and sends it as a query in a wikipedia.summary search)
+
+Passive events:
+- Bot sends a randomly selected message to the general channel when a new member joins
+ (messages chosen from welcomemessage.txt)
 
 Dependancies:
 - TinyDb
@@ -20,4 +27,3 @@ Dependancies:
 To do:
 - Implement label subclasses
 - Implement timed reminders
-- Implement multiple databases
