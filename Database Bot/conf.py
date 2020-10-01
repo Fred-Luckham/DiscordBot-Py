@@ -21,10 +21,11 @@ class Config:
             self.database_labels = self.config.get('Private', 'database_labels', fallback='labels.json')
             self.database_claims = self.config.get('Private', 'database_claims', fallback='claims.json')
             self.main_server_id = int(self.config.get('Private', 'main_server_id', fallback=''))
-            self.servers = self.config.get('Private', 'servers', fallback='')
             self.additional_info_text = self.config.get('Private', 'additional_info_text', fallback='')
             self.logfile = self.config.get('Private', 'logfile', fallback='discord.log')
-            
+
+            self.welcome_message = self.config.get('General', 'welcome_message', fallback='Welcome!')
+            self.server_rules = self.config.get('General', 'server_rules', fallback='')
             self.timezone = self.config.get('General', 'timezone', fallback='GMT') # Note: this is just a string to be printed. Does not affect actually affect displayed time.
             self.description = self.config.get('General', 'description', fallback='''A simple database bot''')
             self.name = self.config.get('General', 'name', fallback='Database Bot')
