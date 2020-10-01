@@ -2,22 +2,23 @@ import discord
 import os
 import logging
 import wikipedia
+import random
 from conf import config
 from discord.ext import commands
+from sender import sender
 
 class Misc(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
 
-
     @commands.command(
         name='rules',
         description='List of server rules'
     )
     async def rules(self, ctx):
-        response=("``` **1:** Spamming, advertising (of paid services or content that is not related to the Elder Scrolls) or automated messages are forbidden.\n **2:** No harassment of other users. Threats, insults, abusive, inflammatory comments, and hate speech are forbidden and result in an immediate ban.\n **3:** Political discussion is not tolerated, this is a modding server.\n **4:** Sexual or illegal media/content is forbidden```")
-        await ctx.send(response)
+        response = config.server_rules
+        await sender(ctx, response)
         return
 
     @commands.command(
@@ -25,27 +26,17 @@ class Misc(commands.Cog):
         description='A welcome message'
     )
     async def welcome(self, ctx):
-        await ctx.send("```Welcome! Thanks for joining. Please feel free to ask any project related questions in #general, and familiarise yourself with the rules (!rules)```")
+        response = config.welcome_message
+        await sender(ctx, response)
 
-    @commands.command(
-        name='quarantine',
-        description='Sends a message to HoTV quarantine'
-    )
-    async def quarantine(self, ctx, message):
-        channel = self.bot.get_channel(740991480574902405)
-        await channel.send(message)
-        return
-    
-    @commands.command(
-        name='trivia',
-        description='Grabs whatever it finds from Wikipedia'
-    )
-    async def trivia(self, ctx, message):
-        searchterm = ctx.message.content
-        response = wikipedia.summary(searchterm, sentences=1)
-        await ctx.send('```{0}```'.format(response))
-        return
-
+    @bot.event()
+    async def on_member_join(member):
+        with open('welcommessages.txt') as file:
+            welcome_messages = file.read().splitlines()
+        random.seed(a=None)
+        response = random.choice(welcome_messages)
+        await sender(ctx, response)
+        logger.info("{0} has joined the server.".format(member))
 
 def setup(bot):
     bot.add_cog(Misc(bot))

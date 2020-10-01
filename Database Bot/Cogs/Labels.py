@@ -1,6 +1,7 @@
 import discord
 import os
 import logging
+from sender import sender
 from discord.ext import commands
 from conf import config
 from tinydb import TinyDB, Query
@@ -22,22 +23,27 @@ class Labels(commands.Cog):
     )
     async def set(self, ctx, label, *, value):
         if self.database.contains(self.query.iid == label):
-            await ctx.send('```Label already exists```')
+            response = ('Label already exists, you can !update the label with a new value')
+            await sender(ctx, response)
         else:
             self.database.insert({'iid': label, 'url': value})
-            await ctx.send('```Label set```')
+            response = ('Label set, you can !update the value or !remove the label')
+            await sender(ctx, response)
             logger.info('{0} set the label {1} to {2}'.format(ctx.message.author.name, label, value))
             return
 
     @commands.command(name="get", 
-    description="Gets an entry from the database"
+    description="Gets an entry from the database: aliases: show, get",
+    aliases=["show"]
     )
     async def get(self, ctx, label):
         if not self.database.contains(self.query.iid == label):
-            await ctx.send('```Label not found```')
+            response = ('Label not found, you can !set the label with a value')
+            await sender(ctx, response)
         else:
-            label = self.database.get(self.query.iid == label)['url']
-            await ctx.send(label)
+            response = self.database.get(self.query.iid == label)['url']
+            await sender(ctx, response)
+            logger.info('{0} called the label {1}'.format(ctx.message.author.name, label))
             return
     
     @commands.command(name="update", 
@@ -46,23 +52,28 @@ class Labels(commands.Cog):
     async def update(self, ctx, label, *, value):
         if not self.database.contains(self.query.iid == label):
             self.database.contains({'url': value}, self.query.iid == label)
-            await ctx.send('```Label not found```')
+            response = ('Label not found')
+            await sender(ctx, response)
             return
         elif self.database.contains(self.query.iid == label):
             self.database.update({'url': value}, self.query.iid == label)
-            await ctx.send('```Updated label```')
+            response = ('Updated label, you can !set the label with a value or !remove the label')
+            await sender(ctx, response)
             logger.info('{0} updated the label {1} to {2}'.format(ctx.message.author.name, label, value))
             return
 
     @commands.command(name="remove",
-    description="Removes an entry from the database"
+    description="Removes an entry from the database: aliases: rmeove, delete",
+    aliases=["delete"]
     )
     async def remove(self, ctx, label):
         if not self.database.contains(self.query.iid == label):
-            await ctx.send('```Label not found```')
+            response = ('Label not found, you can !set the label with a value')
+            await sender(ctx, response)
         else:
             label = self.database.remove(self.query.iid == label)
-            await ctx.send('```Label removed```')
+            response = ('Label removed')
+            await sender(ctx, response)
             logger.info('{0} removed the label {1}'.format(ctx.message.author.name, label))
             return
 
