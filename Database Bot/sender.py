@@ -11,7 +11,8 @@ logger = logging.getLogger(config.logfile)
     hidden=True
 )
 async def sender(ctx, response):
-    if 'http' in response:
+    split_forbidden_char = config.forbidden_char.split(',')
+    if any(item in response for item in split_forbidden_char):
         await ctx.send(response)
     else:
         await ctx.send('```{0}```'.format(response))
