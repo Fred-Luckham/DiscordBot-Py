@@ -31,7 +31,7 @@ class Config:
             self.name = self.config.get('General', 'name', fallback='Database Bot')
             self.prefix = self.config.get('General', 'prefix', fallback='!')
             self.cogs = self.config.get('General', 'Cogs', fallback='Claims, Labels, Misc').split(',')
-            self.forbidden_characters = self.config.get('General', 'forbidden_characters', fallback='')
+            self.forbidden_char = self.config.get('General', 'forbidden_char', fallback='')
 
         except Exception as e:
             print('Error reading config file' + str(e))
