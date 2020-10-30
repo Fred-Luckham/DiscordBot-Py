@@ -2,7 +2,6 @@ import discord
 import os
 import logging
 import wikipedia
-import random
 from sender import sender
 from conf import config
 from discord.ext import commands
@@ -40,21 +39,14 @@ async def on_ready():
         else:
             logger.info('Loaded extension ' + cog_name)
 
-@bot.event
-async def on_member_join(member):
-    for channel in member.guild.channels:
-        if str(channel) == "banter": # We check to make sure we are sending the message in the general channel
-            with open('welcomemessages.txt') as file:
-                welcome_messages = file.read().splitlines()
-            random.seed(a=None)
-            response = random.choice(welcome_messages)
-            await channel.send('```{0}```'.format(response))
-            logger.info("{0} has joined the server.".format(member))
-
 
 #If there is an error, it will answer with an error
 @bot.event
-async def on_command_error(ctx, error):
-    await ctx.send(f'```Error. Try .help ({error})```')
+async def on_command_error(ctx, message):
+    emoji = '❓'
+    await ctx.message.add_reaction(emoji)
+    user = ctx.message.author
+    message = ctx.message.content
+    logger.info(str(user) + ' tried to use the command ' + str(message) + ' but it does not exist.')
 
 bot.run(config.token)
