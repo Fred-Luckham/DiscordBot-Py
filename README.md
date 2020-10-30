@@ -13,7 +13,12 @@ Database Commands:
 Misc Commands:
 - !rules  (Displays server rules)
 - !welcome (Displays a welcome message)
-- !wiki (takes message content and sends it as a query in a wikipedia.summary search)
+
+Wiki Commands:
+- !wiki (takes message content and sends it as a query in a wikipedia.summary search, and returns the results)
+
+UESP Commands (Beta):
+- !uesp (Scrapes the UESP wiki and attempts to return two sentences of the summary from the desired page)
 
 Passive events:
 - Bot sends a randomly selected message to the general channel when a new member joins
