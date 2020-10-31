@@ -19,13 +19,13 @@ class UESP(commands.Cog):
     @commands.command(
         name='UESP',
         aliases=["uesp"],
-        description="Preface your search term with one of the following: Lore:, Morrowind:, Tes3Mod:, Skyrim:, Oblivion:, Online:, Redgaurd:, Arena:, Daggerfall:, Battlespire:, TES_Travels:, Legends:, Blades:")
+        description="This command is still in beta, results may be unexpected. Preface your search term with one of the following: Lore:, Morrowind:, Tes3Mod:, Skyrim:, Oblivion:, Online:, Redgaurd:, Arena:, Daggerfall:, Battlespire:, TES_Travels:, Legends:, Blades:")
     async def UESP(self, ctx, message):
         search_term = ctx.message.content
         search_term = search_term.replace('!UESP ', '')
         search_term = search_term.replace('!uesp ', '')
-        search_term = search_term.title()
-        search_term = search_term.replace("'", "%27")
+        search_term_upper = search_term.title()
+        search_term = search_term_upper.replace("'", "%27")
         search_term = search_term.replace(" ", "_")
         search_term = search_term.replace("The", "the")
         if "Tamriel_Rebuilt" not in search_term:
@@ -39,12 +39,24 @@ class UESP(commands.Cog):
             soup.prettify()
             pTag = soup.p
             response = pTag.get_text()
-            response = re.sub(r"[\[].*?[\]]", "", response)
-            await sender(ctx, response)
-            
+            if len(response) >= 20:
+                if response == "• People • Travel • Notes • Around Tel Vos • Quests • Maps •":
+                    emoji = '❓'
+                    await ctx.message.add_reaction(emoji)
+                    logger.error('Unable to get results for {} from UESP'.format(search_term))
+                else:
+                    response = re.sub(r"[\[].*?[\]]", "", response)
+                    await sender(ctx, response)
+            else:
+                bold_text = re.search(r'\:(.*)', search_term_upper)
+                bold_text = bold_text.group(1)
+                response = soup.find("b", string=bold_text).parent.text
+                response = re.sub(r"[\[].*?[\]]", "", response)
+                await sender(ctx, response)
+
         except:
-            response = ('Sorry, I was not able to find anything. The command is still in beta, some results will not work as expected')
-            await sender(ctx, response)
+            emoji = '❓'
+            await ctx.message.add_reaction(emoji)
             logger.error('Unable to get results for {} from UESP'.format(search_term))
 
 
