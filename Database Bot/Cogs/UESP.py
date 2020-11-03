@@ -11,56 +11,43 @@ from sender import sender
 
 logger = logging.getLogger(config.logfile)
 
+
 class UESP(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
+        self.drop_links = ["https://en.uesp.net#column-one", "https://en.uesp.net#searchInput", "en.uesp.nethttps:", "en.uesp.net/w/index.php", "https://en.uesp.net/wiki/UESPWiki:New_Page_Requests", "https://en.uesp.net/wiki/File:Disambig.png", "https://en.uesp.net/wiki/Help:Disambiguation"]
 
     @commands.command(
         name='UESP',
         aliases=["uesp"],
-        description="This command is still in beta, results may be unexpected. Preface your search term with one of the following: Lore:, Morrowind:, Tes3Mod:, Skyrim:, Oblivion:, Online:, Redgaurd:, Arena:, Daggerfall:, Battlespire:, TES_Travels:, Legends:, Blades:")
+        description="Searches UESP for an article based on user input")
     async def UESP(self, ctx, message):
         search_term = ctx.message.content
-        search_term = search_term.replace('!UESP ', '')
-        search_term = search_term.replace('!uesp ', '')
-        search_term_upper = search_term.title()
-        search_term = search_term_upper.replace("'", "%27")
-        search_term = search_term.replace(" ", "_")
-        search_term = search_term.replace("The", "the")
-        if "Tamriel_Rebuilt" not in search_term:
-            search_term = search_term.replace("Tes3Mod:", "Tes3Mod:Tamriel_Rebuilt/")
-        
-        try:
-            url = ("https://en.uesp.net/wiki/{0}".format(search_term))
+        search_term = search_term.replace(' ', '+')
+        search_term = search_term.title()
+        search_term = re.sub(r'!Uesp\+', '', search_term)
+
+        if ':' not in search_term:
+            url = ("https://en.uesp.net/w/index.php?title=Special:Search&search={0}".format(search_term))
             page = urlopen(url)
             html = page.read().decode("utf-8")
             soup = BeautifulSoup(html, "html.parser")
-            soup.prettify()
-            pTag = soup.p
-            response = pTag.get_text()
-            if len(response) >= 20:
-                if response == "• People • Travel • Notes • Around Tel Vos • Quests • Maps •":
-                    emoji = '❓'
-                    await ctx.message.add_reaction(emoji)
-                    logger.error('Unable to get results for {} from UESP'.format(search_term))
-                else:
-                    response = re.sub(r"[\[].*?[\]]", "", response)
-                    await sender(ctx, response)
-            else:
-                bold_text = re.search(r'\:(.*)', search_term_upper)
-                bold_text = bold_text.group(1)
-                response = soup.find("b", string=bold_text).parent.text
-                response = re.sub(r"[\[].*?[\]]", "", response)
-                await sender(ctx, response)
-
-        except:
-            emoji = '❓'
-            await ctx.message.add_reaction(emoji)
-            logger.error('Unable to get results for {} from UESP'.format(search_term))
-
-
-
+            data = soup.findAll('div',attrs={'class':'mw-body-content'})
+            await sender (ctx, 'No direct results found. Did you mean any of the following?')
+            for div in data:
+                links = div.findAll('a')
+                links = links[:13]
+                for a in links:
+                    link = ("https://en.uesp.net" + a['href'])
+                    if any(item in link for item in self.drop_links):
+                        pass
+                    else: 
+                        await sender(ctx, "<{0}>".format(link))
+        else:
+            search_term = search_term.replace('+', '_')
+            response = ("https://en.uesp.net/wiki/" + search_term)
+            await sender(ctx, response)
 
 def setup(bot):
     bot.add_cog(UESP(bot))
