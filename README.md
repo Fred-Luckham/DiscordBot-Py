@@ -1,4 +1,4 @@
-# DiscordBot-Py
+# Hex
 A Discord bot with a database function written in Python
 
 This bot is designed to help in the organisation of projects managed via Discord. It allows user to set, update, and retrieve "labels". These are keys to dictionary values, which can be text, urls, images.
@@ -29,6 +29,7 @@ Dependancies:
 - TinyDb
 - wikipedia
 - Discord.py
+- BeautifulSoup
 
 To do:
 - Implement label subclasses
