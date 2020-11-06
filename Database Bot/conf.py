@@ -20,6 +20,8 @@ class Config:
             self.admins = self.config.get('Private', 'admins', fallback= '')
             self.database_labels = self.config.get('Private', 'database_labels', fallback='labels.json')
             self.database_claims = self.config.get('Private', 'database_claims', fallback='claims.json')
+            self.db_labels_backup = self.config.get('Private', 'db_labels_backup', fallback='')
+            self.db_claims_backup = self.config.get('Private', 'db_claims_backup', fallback='')
             self.main_server_id = int(self.config.get('Private', 'main_server_id', fallback=''))
             self.additional_info_text = self.config.get('Private', 'additional_info_text', fallback='')
             self.logfile = self.config.get('Private', 'logfile', fallback='discord.log')
