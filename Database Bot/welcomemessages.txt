@@ -1,5 +1,0 @@
-Example message 1
-Example message 2
-Example message 3
-Example message 4
-Example message 5
