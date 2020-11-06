@@ -2,7 +2,7 @@
 A Discord bot with a database function written in Python
 
 This bot is designed to help in the organisation of projects managed via Discord. It allows user to set, update, and retrieve "labels". These are keys to dictionary values, which can be text, urls, images.
-This system was built to meet the requirements set out by an ongoing game modding project. Currently versions of it are running on 3 Discord servers. The commands can be easily locked behind certain user roles to prevent spam. 
+This system was built to meet the requirements set out by an ongoing game modding project. Currently versions of it are serving a user base of around 2000. The commands can be easily locked behind certain user roles to prevent spam. 
 There are a number of Cogs which can be included as needed. The bot will remain as modular as possible.
 
 Database Commands:
