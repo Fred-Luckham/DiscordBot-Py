@@ -1,7 +1,6 @@
 import discord
 import os
 import logging
-import wikipedia
 from conf import config
 from discord.ext import commands
 
