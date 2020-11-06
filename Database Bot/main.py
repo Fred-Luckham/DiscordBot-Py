@@ -2,6 +2,7 @@ import discord
 import os
 import logging
 import wikipedia
+import random
 from sender import sender
 from conf import config
 from discord.ext import commands
@@ -16,9 +17,11 @@ handler = logging.FileHandler(filename=config.logfile, encoding='utf-8', mode='a
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-
-bot = commands.Bot(command_prefix=config.prefix)
+bot = commands.Bot(command_prefix=config.prefix, case_insensitive=True)
+bot.help_command = commands.DefaultHelpCommand(dm_help=True)
 servers = []
+
+
 # Print the user and guild name upon start up
 # Write to the logfile upon startup 
 @bot.event
