@@ -7,6 +7,8 @@ from conf import config
 from discord.ext import commands
 from sender import sender
 
+logger = logging.getLogger(config.logfile)
+
 class Misc(commands.Cog):
     
     def __init__(self, bot):
@@ -28,15 +30,6 @@ class Misc(commands.Cog):
     async def welcome(self, ctx):
         response = config.welcome_message
         await sender(ctx, response)
-
-    @bot.event()
-    async def on_member_join(member):
-        with open('welcommessages.txt') as file:
-            welcome_messages = file.read().splitlines()
-        random.seed(a=None)
-        response = random.choice(welcome_messages)
-        await sender(ctx, response)
-        logger.info("{0} has joined the server.".format(member))
 
 def setup(bot):
     bot.add_cog(Misc(bot))
