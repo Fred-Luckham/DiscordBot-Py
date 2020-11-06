@@ -15,9 +15,6 @@ Misc Commands:
 - !rules  (Displays server rules)
 - !welcome (Displays a welcome message)
 
-Wiki Commands:
-- !wiki (takes message content and sends it as a query in a wikipedia.summary search, and returns the results)
-
 UESP Commands (Beta):
 - !uesp (Scrapes the UESP wiki and attempts to return a link to a page, or a list of potential relevant results)
 
@@ -27,7 +24,6 @@ Passive events:
 
 Dependancies:
 - TinyDb
-- wikipedia
 - Discord.py
 - BeautifulSoup
 
