@@ -18,7 +18,8 @@ Misc Commands:
 - !welcome  (Displays a welcome message)
 
 UESP Commands:
-- !uesp (Scrapes the UESP wiki and attempts to return a link to a page, or a list of potential relevant results)
+- !uesp (Scrapes the UESP wiki for pages and attempts to return a link to a page, or a list of potential relevant results)
+- !media (Scrapes the UESP wiki for media and attempts to return a list of potential relevant results)
 
 Reload Commands (Default admin only and hidden):
 - !reload path.filename  (reloads the specified Cog whilst the bot is running)
