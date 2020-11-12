@@ -17,9 +17,11 @@ Misc Commands:
 - !rules    (Displays server rules)
 - !welcome  (Displays a welcome message)
 
-UESP Commands:
-- !uesp (Scrapes the UESP wiki for pages and attempts to return a link to a page, or a list of potential relevant results)
-- !media (Scrapes the UESP wiki for media and attempts to return a list of potential relevant results)
+Webscrapper Commands:
+- !uesp     (Scrapes the UESP wiki for pages and attempts to return a link to a page, or a list of potential relevant results)
+- !media    (Scrapes the UESP wiki for media and attempts to return a list of potential relevant results)
+- !til      (Scrapes the Imperial Library for results based on user input)
+- !namegen  (Uses the TES name generator hosted on OpenMW-Modding to return randomly generated names)
 
 Reload Commands (Default admin only and hidden):
 - !reload path.filename  (reloads the specified Cog whilst the bot is running)
